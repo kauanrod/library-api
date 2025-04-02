@@ -6,6 +6,6 @@ public enum GeneroLivro {
     FANTASIA,
     MISTERIO,
     ROMANCE,
-    IOGRAFIA,
+    BIOGRAFIA,
     CIENCIA
 }

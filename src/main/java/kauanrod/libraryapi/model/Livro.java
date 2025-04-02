@@ -24,7 +24,7 @@ public class Livro {
     private String titulo;
 
     @Column(name = "data_publicacao", nullable = false)
-    private LocalDate data_publicacao;
+    private LocalDate dataPublicacao;
 
     @Enumerated(EnumType.STRING)
     @Column(name = "genero", length = 30, nullable = false)
@@ -33,7 +33,7 @@ public class Livro {
     @Column(name = "preco", precision = 18, scale = 2)
     private BigDecimal preco;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "id_autor")
     private Autor autor;
 }
