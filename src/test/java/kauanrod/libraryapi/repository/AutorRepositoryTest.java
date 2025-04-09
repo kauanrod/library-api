@@ -19,9 +19,9 @@ public class AutorRepositoryTest {
     @Test
     public void salvarTest() {
         Autor autor = new Autor();
-        autor.setNome("Júlia");
-        autor.setNacionalidade("Brasileira");
-        autor.setDataNascimento(LocalDate.of(2003, 7, 19));
+        autor.setNome("Jose Robert");
+        autor.setNacionalidade("Brasileiro");
+        autor.setDataNascimento(LocalDate.of(1983, 12, 1));
         var autorSalvo = repository.save(autor);
         System.out.println("Autor salvo: " + autorSalvo);
     }
@@ -60,7 +60,7 @@ public class AutorRepositoryTest {
 
     @Test
     public void deleteTest() {
-        var id = UUID.fromString("27780949-4d44-4811-b233-18319267190c");
+        var id = UUID.fromString("ad03d852-a5fa-4d39-84e8-a9ab5879f08c");
         var autor = repository.findById(id).get();
         repository.delete(autor);
     }

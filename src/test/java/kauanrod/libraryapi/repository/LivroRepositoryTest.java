@@ -6,6 +6,7 @@ import kauanrod.libraryapi.model.Livro;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
@@ -71,7 +72,40 @@ class LivroRepositoryTest {
         autorRepository.save(autor);
 
         livro.setAutor(autor);
-
         repository.save(livro);
+    }
+
+    @Test
+    public void atualizarAutorDoLivro() {
+        UUID id = UUID.fromString("b684c539-bb63-4245-afe3-736f35085373");
+        var livroParaAtualizar = repository.findById(id).orElse(null);
+
+        UUID idAutor = UUID.fromString("7b872bac-7f56-45fb-97c3-54382dc59afa");
+        Autor novoAutor = autorRepository.findById(idAutor).orElse(null);
+
+        livroParaAtualizar.setAutor(novoAutor);
+        repository.save(livroParaAtualizar);
+    }
+
+    @Test
+    public void deletar() {
+        UUID id = UUID.fromString("1aa1e09a-ed8b-4d00-815e-b3858cb7fc44");
+        repository.deleteById(id);
+    }
+
+    @Test
+    public void deletarCascade() {
+        UUID id = UUID.fromString("6bd570e5-9185-45eb-b8c1-46d71b9ca13e");
+        repository.deleteById(id);
+    }
+
+    @Test
+    @Transactional
+    public void buscarLivroTest() {
+        UUID id = UUID.fromString("b684c539-bb63-4245-afe3-736f35085373");
+        Livro livro = repository.findById(id).orElse(null);
+
+        System.out.println(livro.getTitulo());
+        System.out.println(livro.getAutor().getNome());
     }
 }
