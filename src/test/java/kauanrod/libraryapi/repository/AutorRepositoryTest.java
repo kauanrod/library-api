@@ -1,12 +1,15 @@
 package kauanrod.libraryapi.repository;
 
 import kauanrod.libraryapi.model.Autor;
-import org.checkerframework.checker.units.qual.A;
+import kauanrod.libraryapi.model.GeneroLivro;
+import kauanrod.libraryapi.model.Livro;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -15,6 +18,7 @@ import java.util.UUID;
 public class AutorRepositoryTest {
 
     @Autowired AutorRepository repository;
+    @Autowired LivroRepository livroRepository;
 
     @Test
     public void salvarTest() {
@@ -63,5 +67,27 @@ public class AutorRepositoryTest {
         var id = UUID.fromString("ad03d852-a5fa-4d39-84e8-a9ab5879f08c");
         var autor = repository.findById(id).get();
         repository.delete(autor);
+    }
+
+    @Test
+    public void salvarAutorComLivrosTest() {
+        Autor autor = new Autor();
+        autor.setNome("Luiza");
+        autor.setNacionalidade("Brasileira");
+        autor.setDataNascimento(LocalDate.of(2012, 8, 1));
+
+        Livro livro = new Livro();
+        livro.setIsbn("98807-29229");
+        livro.setPreco(BigDecimal.valueOf(204));
+        livro.setGenero(GeneroLivro.CIENCIA);
+        livro.setTitulo("Cosmos");
+        livro.setDataPublicacao(LocalDate.of(2016, 2, 28));
+        livro.setAutor(autor);
+
+        autor.setLivros(new ArrayList<>());
+        autor.getLivros().add(livro);
+
+        repository.save(autor);
+        livroRepository.saveAll(autor.getLivros());
     }
 }
