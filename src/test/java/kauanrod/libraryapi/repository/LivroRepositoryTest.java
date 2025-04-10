@@ -26,7 +26,7 @@ class LivroRepositoryTest {
         Livro livro = new Livro();
         livro.setIsbn("90887-84874");
         livro.setPreco(BigDecimal.valueOf(100));
-        livro.setGenero(GeneroLivro.FANTASIA);
+        livro.setGenero(GeneroLivro.CIENCIA);
         livro.setTitulo("Senhor dos Anéis");
         livro.setDataPublicacao(LocalDate.of(1950, 1, 2));
 
@@ -111,33 +111,43 @@ class LivroRepositoryTest {
     }
 
     @Test
-    public void pesquisaPorTituloTest(){
+    public void pesquisaPorTituloTest() {
         List<Livro> lista = repository.findByTitulo("Senhor dos Anéis");
         lista.forEach(System.out::println);
     }
 
     @Test
-    public void listarTodosOsLivros(){
+    public void listarTodosOsLivros() {
         var resultado = repository.listarTodos();
         resultado.forEach(System.out::println);
 //        System.out.println(resultado);
     }
 
     @Test
-    public void listarAutorPorLivro(){
+    public void listarAutorPorLivro() {
         var resultado = repository.listarAutoresPorLivro();
         resultado.forEach(System.out::println);
     }
 
     @Test
-    public void listarLivrosPorGenero(){
+    public void listarLivrosPorGenero() {
         var resultado = repository.findByGenero(GeneroLivro.FANTASIA);
         resultado.forEach(System.out::println);
     }
 
     @Test
-    public void listarLivrosPorGeneroPositionalParameters(){
+    public void listarLivrosPorGeneroPositionalParameters() {
         var resultado = repository.findByGeneroPositionalParameters(GeneroLivro.FANTASIA);
         resultado.forEach(System.out::println);
+    }
+
+    @Test
+    public void deleteByGenero() {
+        repository.deleteByGenero(GeneroLivro.CIENCIA);
+    }
+
+    @Test
+    public void updateDataPublicacao() {
+        repository.updateDataPublicacao(LocalDate.of(2000,1,1));
     }
 }
