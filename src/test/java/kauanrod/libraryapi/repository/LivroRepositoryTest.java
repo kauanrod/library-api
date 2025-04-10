@@ -10,6 +10,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.util.List;
 import java.util.UUID;
 
 @SpringBootTest
@@ -107,5 +108,36 @@ class LivroRepositoryTest {
 
         System.out.println(livro.getTitulo());
         System.out.println(livro.getAutor().getNome());
+    }
+
+    @Test
+    public void pesquisaPorTituloTest(){
+        List<Livro> lista = repository.findByTitulo("Senhor dos Anéis");
+        lista.forEach(System.out::println);
+    }
+
+    @Test
+    public void listarTodosOsLivros(){
+        var resultado = repository.listarTodos();
+        resultado.forEach(System.out::println);
+//        System.out.println(resultado);
+    }
+
+    @Test
+    public void listarAutorPorLivro(){
+        var resultado = repository.listarAutoresPorLivro();
+        resultado.forEach(System.out::println);
+    }
+
+    @Test
+    public void listarLivrosPorGenero(){
+        var resultado = repository.findByGenero(GeneroLivro.FANTASIA);
+        resultado.forEach(System.out::println);
+    }
+
+    @Test
+    public void listarLivrosPorGeneroPositionalParameters(){
+        var resultado = repository.findByGeneroPositionalParameters(GeneroLivro.FANTASIA);
+        resultado.forEach(System.out::println);
     }
 }
